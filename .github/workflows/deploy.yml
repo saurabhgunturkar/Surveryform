@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -8,30 +8,29 @@ on:
       - uat
 
 jobs:
-  deploy-dev:
+  deploy:
     runs-on: ubuntu-latest
-    environment: Dev
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Deploy to Dev
-        env:
-          DEV_URL: ${{ secrets.DEV_URL }}
-        run: |
-          echo "Deploying to Dev environment at $DEV_URL"
+    strategy:
+      matrix:
+        environment: [Dev, UAT]
     
-
-  deploy-uat:
-    runs-on: ubuntu-latest
-    environment: UAT
+    environment: ${{ matrix.environment }}
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy to UAT
-        env:
-          UAT_URL: ${{ secrets.UATURL }}
+      - name: Set Deployment URL
         run: |
-          echo "Deploying to UAT environment at $UAT_URL"
-          
+          if [[ "${{ matrix.environment }}" == "Dev" ]]; then
+            echo "DEPLOY_URL=${{ secrets.DEV_URL }}" >> $GITHUB_ENV
+          elif [[ "${{ matrix.environment }}" == "UAT" ]]; then
+            echo "DEPLOY_URL=${{ secrets.UAT_URL }}" >> $GITHUB_ENV
+          fi
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_branch: gh-pages
+            publish_dir: .
