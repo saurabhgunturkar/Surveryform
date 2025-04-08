@@ -16,10 +16,10 @@ jobs:
 
       - name: Deploy to Dev
         env:
-          DEV_URL: ${{ secrets.DEV_URL }}
+          DEV_URL: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Deploying to Dev environment at $DEV_URL"
-          # Add your deployment script/commands here
+    
 
   deploy-uat:
     runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
 
       - name: Deploy to UAT
         env:
-          UAT_URL: ${{ secrets.UAT_URL }}
+          UAT_URL: ${{ secrets}}
         run: |
           echo "Deploying to UAT environment at $UAT_URL"
-          # Add your deployment script/commands here
+          
