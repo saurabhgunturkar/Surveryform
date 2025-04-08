@@ -17,7 +17,7 @@ jobs:
 
       - name: Deploy to Dev
         env:
-          DEV_URL: ${{ secrets.GITHUB_TOKEN }}
+          DEV_URL: ${{ secrets.DEV_URL }}
         run: |
           echo "Deploying to Dev environment at $DEV_URL"
     
@@ -31,7 +31,7 @@ jobs:
 
       - name: Deploy to UAT
         env:
-          UAT_URL: ${{ secrets}}
+          UAT_URL: ${{ secrets.UATURL }}
         run: |
           echo "Deploying to UAT environment at $UAT_URL"
           
