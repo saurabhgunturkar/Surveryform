@@ -1,10 +1,10 @@
-name: Deploy Static Files
+name: Deploy
 
 on:
   push:
     branches:
-      - dev
       - main
+      - dev
       - uat
 
 jobs:
@@ -15,10 +15,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy to Dev
+        env:
+          DEV_URL: ${{ secrets.DEV_URL }}
         run: |
-          echo "Deploying to Dev environment at ${{ secrets.DEV_URL }}"
+          echo "Deploying to Dev environment at $DEV_URL"
           # Add your deployment script/commands here
- 
+
   deploy-uat:
     runs-on: ubuntu-latest
     steps:
@@ -26,6 +28,8 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy to UAT
+        env:
+          UAT_URL: ${{ secrets.UAT_URL }}
         run: |
-          echo "Deploying to UAT environment at ${{ secrets.UAT_URL }}"
+          echo "Deploying to UAT environment at $UAT_URL"
           # Add your deployment script/commands here
