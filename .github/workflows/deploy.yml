@@ -3,7 +3,9 @@ name: Deploy Static Files
 on:
   push:
     branches:
+      - dev
       - main
+      - uat
 
 jobs:
   deploy-dev:
