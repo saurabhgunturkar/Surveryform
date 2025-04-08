@@ -325,5 +325,13 @@
         </div>
     </div>
     <script src="popup.js"></script>
+    <script>
+        let apiUrl = window.location.hostname.includes("dev")
+          ? "https://dev.saurabhgunturkar.github.io/Surveryform/"
+          : "https://uat.saurabhgunturkar.github.io/Surveryform/";
+      
+        console.log("Using API:", apiUrl);
+      </script>
+      
 </body>
 </html>
